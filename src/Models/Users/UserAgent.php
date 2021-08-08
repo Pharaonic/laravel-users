@@ -1,6 +1,6 @@
 <?php
 
-namespace Pharaonic\Laravel\Users\Models\Agents;
+namespace Pharaonic\Laravel\Users\Models\Users\Agents;
 
 use Illuminate\Database\Eloquent\Model;
 use Pharaonic\Laravel\Users\Models\Agents\Agent;
