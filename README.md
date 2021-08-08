@@ -1,8 +1,10 @@
-#### Devices (Agents)
+#### Traits
     - HasDevices
     - HasHashedPassword
     - HasPasswordHistory
-<hr>
+    
+<br><hr><br>
+
 
 #### Devices (Agents)
     - $user->detectDevice(),
