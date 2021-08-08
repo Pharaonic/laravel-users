@@ -2,17 +2,27 @@
 
 namespace Pharaonic\Laravel\Users\Classes;
 
-
 use DeviceDetector\DeviceDetector;
 use DeviceDetector\Parser\Client\Browser as ClientBrowser;
 use DeviceDetector\Parser\Device\AbstractDeviceParser;
 use DeviceDetector\Parser\OperatingSystem;
-use Pharaonic\Laravel\Users\Models\Agents\Agent;
-use Pharaonic\Laravel\Users\Models\Agents\Bot;
-use Pharaonic\Laravel\Users\Models\Agents\Browser;
-use Pharaonic\Laravel\Users\Models\Agents\Device;
-use Pharaonic\Laravel\Users\Models\Agents\OperationSystem;
+use Pharaonic\Laravel\Users\Models\Agents\{
+    Agent,
+    Bot,
+    Browser,
+    Device,
+    OperationSystem
+};
 
+/**
+ * @property string $agent
+ * @property string $ip
+ * @property array $languages
+ * @property string $language
+ * @property string|null $variant
+ * 
+ * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ */
 class AgentDetector
 {
     /** @var string $agent HTTP User Agent */
@@ -21,7 +31,7 @@ class AgentDetector
     /** @var string $ip User IP */
     public $ip;
 
-    /** @var string $languages Languages List */
+    /** @var array $languages Languages List */
     public $languages;
 
     /** @var string $language Preferred Language */
