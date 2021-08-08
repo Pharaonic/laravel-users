@@ -6,7 +6,7 @@ use Pharaonic\Laravel\Users\Models\Agents\Agent;
 use Pharaonic\Laravel\Users\Models\Users\UserAgent;
 
 /**
- * @property Agent[] $devices
+ * Relate the user with his/her devices. 
  *
  * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
  */
