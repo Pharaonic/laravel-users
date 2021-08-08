@@ -1,4 +1,10 @@
 #### Devices (Agents)
+    - HasDevices
+    - HasHashedPassword
+    - HasPasswordHistory
+<hr>
+
+#### Devices (Agents)
     - $user->detectDevice(),
     - $user->devices,
     - $user->removeDevice(19),
