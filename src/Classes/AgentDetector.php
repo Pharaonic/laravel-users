@@ -20,7 +20,7 @@ use Pharaonic\Laravel\Users\Models\Agents\{
  * @property array $languages
  * @property string $language
  * @property string|null $variant
- * 
+ *
  * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
  */
 class AgentDetector
@@ -114,6 +114,8 @@ class AgentDetector
     public function load(Agent $agent = null)
     {
         $data = [
+            'id'        => null,
+
             'isBot'     => false,
             'bot'       => null,
 
@@ -148,11 +150,13 @@ class AgentDetector
                     'producer'  => $data['bot']->producer
                 ]);
 
-                Agent::create([
+                $newAgent = Agent::create([
                     'user_agent'    => $this->agent,
                     'is_bot'        => true,
                     'bot_id'        => $bot->id
                 ]);
+
+                $data['id'] = $newAgent->id;
             } else {
                 $osFamily = OperatingSystem::getOsFamily($newAgent->getOs('name'));
                 $browserFamily = ClientBrowser::getBrowserFamily($newAgent->getClient('name'));
@@ -206,15 +210,19 @@ class AgentDetector
                         'engine'        => $data['browser']->engine
                     ]);
 
-                Agent::create([
+                $newAgent = Agent::create([
                     'user_agent'            => $this->agent,
                     'type'                  => $data['type'],
                     'device_id'             => $device->id ?? null,
                     'operation_system_id'   => $os->id ?? null,
                     'browser_id'            => $browser->id ?? null
                 ]);
+
+                $data['id'] = $newAgent->id;
             }
         } else {
+            $data['id'] = $agent->id;
+
             if ($agent->is_bot) {
                 $data['isBot'] = true;
                 $data['bot'] = (object)[
