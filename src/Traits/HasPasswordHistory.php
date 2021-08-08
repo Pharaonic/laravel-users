@@ -20,21 +20,24 @@ trait HasPasswordHistory
      */
     public static function bootHasPasswordHistory()
     {
-        self::saving(function ($model) {
-            dd($model);
-            // if ($model->isDirty('password')) {
-            //     $model->password = Hash::make($model->password);
-            // }
+        self::saved(function ($model) {
+            if ($model->isDirty('password')) $model->passwordHistory()->create([
+                'pass_from' => $model->getOriginal('password'),
+                'pass_to'   => $model->password,
+                'ip'        => agent()->ip,
+                'agent_id'  => agent()->id
+            ]);
         });
     }
 
     /**
      * Get all user's Hashed-Passwords.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    private function passwordHistory()
+    public function passwordHistory()
     {
-        return $this->morphMany(UserPasswordHistory::class, 'user');
+        return $this->morphMany(UserPasswordHistory::class, 'user')
+            ->with(['agent', 'agent.device', 'agent.browser',  'agent.operationSystem']);
     }
 }
