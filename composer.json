@@ -38,7 +38,10 @@
     "autoload": {
         "psr-4": {
             "Pharaonic\\Laravel\\Users\\": "src"
-        }
+        },
+        "files": [
+            "src/Helpers/Agent.php"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true
