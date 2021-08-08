@@ -1,7 +1,8 @@
 #### Devices (Agents)
-    - User::first()->detectDevice(),
-    - User::first()->devices,
-    - User::first()->removeDevice(19),
-    - User::first()->removeAllDevices(),
+    - $user->detectDevice(),
+    - $user->devices,
+    - $user->removeDevice(19),
+    - $user->removeAllDevices(),
+    
     - dd(agent());    Helper
     - AgentDetector::class  Middleware
