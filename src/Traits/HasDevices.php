@@ -3,7 +3,7 @@
 namespace Pharaonic\Laravel\Users\Traits;
 
 use Pharaonic\Laravel\Users\Models\Agents\Agent;
-use Pharaonic\Laravel\Users\Models\Agents\Users\UserAgent;
+use Pharaonic\Laravel\Users\Models\Users\UserAgent;
 
 /**
  * @property Agent[] $devices
