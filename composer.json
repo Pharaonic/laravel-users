@@ -1,0 +1,45 @@
+
+{
+    "name": "pharaonic/laravel-users",
+    "description": "Laravel Users (Roles & Permissions, Social Auth, Devices, Password Hash & History).",
+    "keywords": [
+        "laravel roles",
+        "laravel permissions",
+        "laravel social login",
+        "laravel user devices",
+        "laravel user passwords",
+        "laravel",
+        "php"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Moamen Eltouny (Raggi)",
+            "email": "raggi@raggitech.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "laravel/framework": ">=6.0",
+        "pharaonic/laravel-helpers": ">=2.4",
+        "laravel/socialite": ">=5.2.3",
+        "matomo/device-detector": ">=4.3.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pharaonic\\Laravel\\Users\\UsersServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Pharaonic\\Laravel\\Users\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
