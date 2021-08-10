@@ -55,12 +55,17 @@ class AgentDetector
         $this->ip = $ip ?? $request->ip();
         $this->langs($accept_langauge ?? $request->server('HTTP_ACCEPT_LANGUAGE') ?? null);
 
-        if ($request->session()->has('agent')) {
-            $agent = $request->session()->get('agent');
-        } else {
+        if ($request->expectsJson()) {
             $agent = Agent::findByAgent($this->agent);
             $agent = $this->load($agent);
-            $request->session()->put('agent', $agent);
+        } else {
+            if ($request->session()->has('agent')) {
+                $agent = $request->session()->get('agent');
+            } else {
+                $agent = Agent::findByAgent($this->agent);
+                $agent = $this->load($agent);
+                $request->session()->put('agent', $agent);
+            }
         }
 
         foreach ($agent as $name => $value)
