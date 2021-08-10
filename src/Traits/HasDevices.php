@@ -61,7 +61,7 @@ trait HasDevices
     /**
      * Check if device detected
      *
-     * @return bool
+     * @return boolean
      */
     public function hasDetectedDevice()
     {
@@ -76,10 +76,7 @@ trait HasDevices
      */
     public function detectDevice(string $fcm = null)
     {
-        $this->devicesList()->updateOrCreate([
-            'agent_id'  => agent()->id,
-            'fcm_token' => $fcm
-        ]);
+        $this->devicesList()->updateOrCreate(['agent_id' => agent()->id], ['fcm_token' => $fcm]);
     }
 
     /**
