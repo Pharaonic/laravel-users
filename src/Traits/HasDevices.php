@@ -6,7 +6,7 @@ use Pharaonic\Laravel\Users\Models\Agents\Agent;
 use Pharaonic\Laravel\Users\Models\Users\UserAgent;
 
 /**
- * Relate the user with his/her devices. 
+ * Relate the user with his/her devices.
  *
  * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
  */
@@ -37,6 +37,8 @@ trait HasDevices
 
     /**
      * Get all deivces list.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     private function devicesList()
     {
@@ -44,14 +46,39 @@ trait HasDevices
     }
 
     /**
+     * List of FCM token.
+     *
+     * @return array|null
+     */
+    public function fcmList()
+    {
+        $list = $this->devicesList()->whereNotNull('fcm_token')->get();
+        if ($list->isEmpty()) return null;
+
+        return $list->pluck('fcm_token')->toArray();
+    }
+
+    /**
+     * Check if device detected
+     *
+     * @return bool
+     */
+    public function hasDetectedDevice()
+    {
+        return $this->devicesList()->where('agent_id', agent()->id)->exists();
+    }
+
+    /**
      * Add Current Agent To Current User
      *
-     * @return void
+     * @param string $fcm
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
      */
-    public function detectDevice()
+    public function detectDevice(string $fcm = null)
     {
         $this->devicesList()->updateOrCreate([
-            'agent_id'  => agent()->id
+            'agent_id'  => agent()->id,
+            'fcm_token' => $fcm
         ]);
     }
 
@@ -59,11 +86,11 @@ trait HasDevices
      * Remove Device by Id
      *
      * @param integer $id
-     * @return void
+     * @return bool
      */
     public function removeDevice(int $id)
     {
-        return $this->devicesList()->where('id', $id)->delete();
+        return $this->devicesList()->where('id', $id)->delete() == 1;
     }
 
     /**

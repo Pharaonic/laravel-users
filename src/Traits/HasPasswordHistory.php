@@ -21,7 +21,7 @@ trait HasPasswordHistory
     public static function bootHasPasswordHistory()
     {
         self::saved(function ($model) {
-            if ($model->isDirty('password')) $model->passwordHistory()->create([
+            if ($model->isDirty('password') && !$model->wasRecentlyCreated) $model->passwordHistory()->create([
                 'pass_from' => $model->getOriginal('password'),
                 'pass_to'   => $model->password,
                 'ip'        => agent()->ip,
