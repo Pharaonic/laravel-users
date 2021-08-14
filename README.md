@@ -1,19 +1,25 @@
 #### Traits
     - HasDevices
+
     - HasHashedPassword
     - HasPasswordHistory
+
+    - HasRoles
+    - HasPermissions
     
 <br><hr><br>
 
 
 #### Devices (Agents)
-    - $user->detectDevice(),
-    - $user->devices,
-    - $user->removeDevice(19),
-    - $user->removeAllDevices(),
+    - $user->hasDetectedDevice()
+    - $user->detectDevice()
+    - $user->devices
+    - $user->fcmList
+    - $user->removeDevice(3)   device-id
+    - $user->removeAllDevices()
     
-    - dd(agent());    Helper
-    - AgentDetector::class  Middleware
+    - agent()   Helper
+    - agent     Middleware
 
 
 #### Password
@@ -29,3 +35,5 @@
                 - operationSystem
                 - browser
         
+#### Roles
+    -

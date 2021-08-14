@@ -2,8 +2,7 @@
 
 namespace Pharaonic\Laravel\Users\Traits;
 
-use Illuminate\Support\Facades\Hash;
-use Pharaonic\Laravel\Users\Models\Users\UserPasswordHistory;
+use Pharaonic\Laravel\Users\Models\UserPasswordHistory;
 
 /**
  * Logging Hashed Passwords

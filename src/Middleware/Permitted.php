@@ -4,20 +4,22 @@ namespace Pharaonic\Laravel\Users\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Pharaonic\Laravel\Users\Classes\AgentDetector as AD;
 
-class AgentDetector
+class Permitted
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * @param  string  $permissions
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, string ...$permissions)
     {
-        app()->instance('Agent', new AD);
+        $user = $request->user();
+        if (!$user || empty($permissions) || !$user->permitted($permissions)) return abort(404);
+
         return $next($request);
     }
 }

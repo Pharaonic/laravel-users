@@ -1,7 +1,7 @@
 
 {
     "name": "pharaonic/laravel-users",
-    "description": "Laravel Users (Roles & Permissions, Social Auth, Devices, Password Hash & History).",
+    "description": "Laravel Users (Roles & Permissions, Devices, Password: Auto Hashing & History).",
     "keywords": [
         "laravel roles",
         "laravel permissions",
@@ -21,9 +21,7 @@
     "require": {
         "php": ">=7.2",
         "laravel/framework": ">=6.0",
-        "pharaonic/laravel-helpers": ">=2.4",
-        "laravel/socialite": ">=5.2.3",
-        "matomo/device-detector": ">=4.3.0"
+        "pharaonic/laravel-agents-detector": ">=5.2.3"
     },
     "config": {
         "sort-packages": true
@@ -38,10 +36,7 @@
     "autoload": {
         "psr-4": {
             "Pharaonic\\Laravel\\Users\\": "src"
-        },
-        "files": [
-            "src/Helpers/Agent.php"
-        ]
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

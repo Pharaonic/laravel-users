@@ -2,8 +2,8 @@
 
 namespace Pharaonic\Laravel\Users\Traits;
 
-use Pharaonic\Laravel\Users\Models\Agents\Agent;
-use Pharaonic\Laravel\Users\Models\Users\UserAgent;
+use Pharaonic\Laravel\Agents\Models\Agent;
+use Pharaonic\Laravel\Users\Models\UserAgent;
 
 /**
  * Relate the user with his/her devices.
@@ -50,7 +50,7 @@ trait HasDevices
      *
      * @return array|null
      */
-    public function fcmList()
+    public function getFcmListArrtibute()
     {
         $list = $this->devicesList()->whereNotNull('fcm_token')->get();
         if ($list->isEmpty()) return null;
