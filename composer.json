@@ -21,7 +21,7 @@
     "require": {
         "php": ">=7.2",
         "laravel/framework": ">=6.0",
-        "pharaonic/laravel-agents-detector": ">=5.2.3"
+        "pharaonic/laravel-agents-detector": ">=1.0.3"
     },
     "config": {
         "sort-packages": true
