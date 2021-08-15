@@ -71,7 +71,7 @@
         $user->syncPermissions('*', 'test.something'),
 
 
-        $user->RolesList,
+        $user->rolesList,
         $user->entrust('test.something', 'admin'),
         $user->entrusted('admin'),
         $user->entrustedAny('*', 'admin'),
