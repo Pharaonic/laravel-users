@@ -5,6 +5,11 @@ namespace Pharaonic\Laravel\Users\Traits;
 use Pharaonic\Laravel\Users\Models\Permission;
 use Pharaonic\Laravel\Users\Traits\HasRoles;
 
+/**
+ * Auth Permissions Trait.
+ * 
+ * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ */
 trait HasPermissions
 {
     /**
@@ -172,8 +177,6 @@ trait HasPermissions
      */
     public function syncPermissions(...$permissions)
     {
-        $result = $this->permissions()->sync($this->preparePermissionsIds($permissions));
-
-        return !empty(array_filter($result));
+        return !empty(array_filter($this->permissions()->sync($this->preparePermissionsIds($permissions))));
     }
 }

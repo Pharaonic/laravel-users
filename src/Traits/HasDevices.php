@@ -99,4 +99,14 @@ trait HasDevices
     {
         return $this->devicesList()->delete() > 0;
     }
+
+    /**
+     * Getting current device
+     *
+     * @return UserAgent
+     */
+    public function getCurrentDeviceAttribute()
+    {
+        return $this->devicesList()->where('agent_id', agent()->id)->with(['agent.operationSystem', 'agent.browser', 'agent.device'])->first();
+    }
 }

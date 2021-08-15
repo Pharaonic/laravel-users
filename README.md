@@ -13,6 +13,7 @@
 #### Devices (Agents)
 
     - $user->hasDetectedDevice()
+    - $user->detectDevice($fcm)
     - $user->detectDevice()
     - $user->devices
     - $user->fcmList
@@ -21,6 +22,8 @@
 
     - agent()   Helper
     - agent     Middleware
+
+<br><hr><br>
 
 #### Password
 
@@ -35,6 +38,8 @@
                 - device
                 - operationSystem
                 - browser
+
+<br><hr><br>
 
 #### Roles
 
@@ -53,7 +58,6 @@
             'ar'    => 'مدير',
             'en'    => 'Administrator'
         ])
-
     
 
     - Actions

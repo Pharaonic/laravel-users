@@ -4,6 +4,11 @@ namespace Pharaonic\Laravel\Users\Traits;
 
 use Pharaonic\Laravel\Users\Models\Role;
 
+/**
+ * Auth Roles Trait.
+ * 
+ * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ */
 trait HasRoles
 {
     /**
@@ -76,7 +81,7 @@ trait HasRoles
 
         $roles = $this->prepareRolesArray($roles);
         $rolesList = $this->rolesList;
-        
+
         foreach ($roles as $role)
             if (!in_array($role, $rolesList))
                 return false;
@@ -159,12 +164,10 @@ trait HasRoles
      * Sync the model Roles
      *
      * @param string ...$roles
-     * @return void
+     * @return boolean
      */
     public function syncRoles(...$roles)
     {
-        $result = $this->roles()->sync($this->prepareRolesIds($roles));
-
-        return !empty(array_filter($result));
+        return !empty(array_filter($this->roles()->sync($this->prepareRolesIds($roles))));
     }
 }
