@@ -1,4 +1,5 @@
 #### Traits
+
     - HasDevices
 
     - HasHashedPassword
@@ -6,23 +7,23 @@
 
     - HasRoles
     - HasPermissions
-    
+
 <br><hr><br>
 
-
 #### Devices (Agents)
+
     - $user->hasDetectedDevice()
     - $user->detectDevice()
     - $user->devices
     - $user->fcmList
     - $user->removeDevice(3)   device-id
     - $user->removeAllDevices()
-    
+
     - agent()   Helper
     - agent     Middleware
 
-
 #### Password
+
     - Hashed Password
     - Password History
         - $user->passwordHistory
@@ -34,6 +35,48 @@
                 - device
                 - operationSystem
                 - browser
-        
+
 #### Roles
-    -
+
+    - Create
+        Permission::create('test.something', 'Test Someth2ing')
+        Permission::create('test.something', 'Test Something', 'en')
+        Permission::create('test.something', [
+            'ar'    => 'تجربة شئ',
+            'en'    => 'Test Something'
+        ])
+
+
+        Role::create('admin', 'Administrator');
+        Role::create('admin', 'Administrator', 'en');
+        Permission::create('test.something', [
+            'ar'    => 'مدير',
+            'en'    => 'Administrator'
+        ])
+
+    
+
+    - Actions
+        $user->permissionsList,
+        $user->permit('*', 'asd'),
+        $user->permitted('test.something'),
+        $user->permittedAny('test.something'),
+        $user->forbid('*'),
+        $user->forbad('test.something'),
+        $user->forbadAny('test.something'),
+        $user->syncPermissions('*', 'test.something'),
+
+
+        $user->RolesList,
+        $user->entrust('test.something', 'admin'),
+        $user->entrusted('admin'),
+        $user->entrustedAny('*', 'admin'),
+        $user->distrust('admin'),
+        $user->distrusted('admin'),
+        $user->distrustedAny('*', 'admin'),
+        $user->syncRoles('*', 'admin'),
+
+
+    - Middlewares
+        middleware('entrusted:admin')
+        middleware('permitted:test.something')
