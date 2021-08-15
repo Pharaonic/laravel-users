@@ -1,13 +1,13 @@
-
 {
     "name": "pharaonic/laravel-users",
     "description": "Laravel Users (Roles & Permissions, Devices, Password: Auto Hashing & History).",
     "keywords": [
         "laravel roles",
         "laravel permissions",
-        "laravel social login",
         "laravel user devices",
         "laravel user passwords",
+        "laravel user passwords hashed",
+        "laravel user passwords history",
         "laravel",
         "php"
     ],
@@ -21,7 +21,8 @@
     "require": {
         "php": ">=7.2",
         "laravel/framework": ">=6.0",
-        "pharaonic/laravel-agents-detector": ">=1.0.3"
+        "pharaonic/laravel-agents-detector": ">=1.0.3",
+        "pharaonic/laravel-translatable": ">=1.0.0"
     },
     "config": {
         "sort-packages": true
