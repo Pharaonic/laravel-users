@@ -25,6 +25,7 @@ trait HasDevices
             ->where('user_agents.user_type', get_class($this))
             ->select([
                 'user_agents.id',
+                'user_agents.ip',
                 'agents.type',
                 'agents.user_agent',
                 'agents.device_id',
@@ -76,7 +77,7 @@ trait HasDevices
      */
     public function detectDevice(string $fcm = null)
     {
-        $this->devicesList()->updateOrCreate(['agent_id' => agent()->id], ['fcm_token' => $fcm]);
+        $this->devicesList()->updateOrCreate(['agent_id' => agent()->id], ['fcm_token' => $fcm, 'ip' => agent()->ip]);
     }
 
     /**
