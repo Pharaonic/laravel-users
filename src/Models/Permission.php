@@ -33,6 +33,18 @@ class Permission extends Model
     protected $translatableAttributes = ['title'];
 
     /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::deleting(function ($permission) {
+            $permission->permissible()->delete();
+        });
+    }
+
+    /**
      * Getting permissions by code
      *
      * @param string $code
