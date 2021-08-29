@@ -2,16 +2,33 @@
 
 namespace Pharaonic\Laravel\Users\Traits;
 
+use Pharaonic\Laravel\Users\Models\Permissible;
 use Pharaonic\Laravel\Users\Models\Permission;
 use Pharaonic\Laravel\Users\Traits\HasRoles;
 
 /**
  * Auth Permissions Trait.
- * 
+ *
  * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
  */
 trait HasPermissions
 {
+    protected static function bootHasPermissions()
+    {
+        // Deleting
+        self::deleting(function ($model) {
+            $model->permissibles()->delete();
+        });
+    }
+
+    /**
+     * Get all of the main permissibles objects.
+     */
+    public function permissibles()
+    {
+        return $this->morphMany(Permissible::class, 'permissible');
+    }
+    
     /**
      * Get all attached permissions to the model.
      *
