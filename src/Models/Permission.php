@@ -3,6 +3,7 @@
 namespace Pharaonic\Laravel\Users\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Pharaonic\Laravel\Translatable\Translatable;
 
 /**
@@ -15,7 +16,7 @@ use Pharaonic\Laravel\Translatable\Translatable;
  */
 class Permission extends Model
 {
-    use Translatable;
+    use Translatable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -71,5 +72,15 @@ class Permission extends Model
         $permission->save();
 
         return $permission;
+    }
+
+    /**
+     * Get all attached Permissible to the permission.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function permissible()
+    {
+        return $this->hasMany(Permissible::class);
     }
 }
