@@ -40,7 +40,7 @@ class Permission extends Model
     protected static function booted()
     {
         static::deleting(function ($permission) {
-            $permission->permissible()->delete();
+            $permission->permissibles()->delete();
         });
     }
 
@@ -87,11 +87,11 @@ class Permission extends Model
     }
 
     /**
-     * Get all attached Permissible to the permission.
+     * Get all attached Permissibles to the permission.
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function permissible()
+    public function permissibles()
     {
         return $this->hasMany(Permissible::class);
     }
