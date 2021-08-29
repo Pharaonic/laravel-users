@@ -35,6 +35,18 @@ class Role extends Model
     protected $translatableAttributes = ['title'];
 
     /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::deleting(function ($role) {
+            $role->roleables()->delete();
+        });
+    }
+
+    /**
      * Getting roles by code
      *
      * @param string $code
