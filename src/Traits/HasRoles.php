@@ -3,14 +3,31 @@
 namespace Pharaonic\Laravel\Users\Traits;
 
 use Pharaonic\Laravel\Users\Models\Role;
+use Pharaonic\Laravel\Users\Models\Roleable;
 
 /**
  * Auth Roles Trait.
- * 
+ *
  * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
  */
 trait HasRoles
 {
+    protected static function bootHasRoles()
+    {
+        // Deleting
+        self::deleting(function ($model) {
+            $model->roleables()->delete();
+        });
+    }
+
+    /**
+     * Get all of the main roleable objects.
+     */
+    public function roleables()
+    {
+        return $this->morphMany(Roleable::class, 'roleable');
+    }
+
     /**
      * Get all attached roles to the model.
      *
