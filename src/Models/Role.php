@@ -4,6 +4,7 @@ namespace Pharaonic\Laravel\Users\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Pharaonic\Laravel\Translatable\Translatable;
+use Pharaonic\Laravel\Users\Models\Roleable;
 use Pharaonic\Laravel\Users\Traits\HasPermissions;
 
 /**
@@ -73,5 +74,15 @@ class Role extends Model
         $role->save();
 
         return $role;
+    }
+
+    /**
+     * Get all attached roleables to the role.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function roleables()
+    {
+        return $this->hasMany(Roleable::class);
     }
 }
