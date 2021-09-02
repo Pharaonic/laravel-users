@@ -2,6 +2,7 @@
 
 namespace Pharaonic\Laravel\Users\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Pharaonic\Laravel\Agents\Models\Agent;
 
@@ -11,6 +12,7 @@ use Pharaonic\Laravel\Agents\Models\Agent;
  * @property string $signature
  * @property string $ip
  * @property string|null $fcm_token
+ * @property Carbon $last_action_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Agent $agent
@@ -25,7 +27,12 @@ class UserAgent extends Model
      *
      * @var array
      */
-    protected $fillable = ['agent_id', 'signature', 'fcm_token', 'ip', 'user_id', 'user_type'];
+    protected $fillable = ['agent_id', 'signature', 'fcm_token', 'ip', 'user_id', 'user_type', 'last_action_at'];
+
+    /**
+     * {@inheritDoc}
+     */
+    protected $casts = ['last_action_at' => 'datetime'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -43,5 +50,15 @@ class UserAgent extends Model
     public function user()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Refresh LAST-ACTION-AT
+     *
+     * @return boolean
+     */
+    public function refresh()
+    {
+        return $this->update(['last_action_at' => Carbon::now()]);
     }
 }
