@@ -62,22 +62,33 @@ trait HasDevices
     /**
      * Check if device detected
      *
+     * @param string $signature
      * @return boolean
      */
-    public function hasDetectedDevice()
+    public function hasDetectedDevice(string $signature)
     {
-        return $this->devicesList()->where('agent_id', agent()->id)->exists();
+        return $this->devicesList()->where([
+            'agent_id'  => agent()->id,
+            'signature' => $signature
+        ])->exists();
     }
 
     /**
      * Add Current Agent To Current User
      *
-     * @param string $fcm
+     * @param string $signature
+     * @param string|null $fcm
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
      */
-    public function detectDevice(string $fcm = null)
+    public function detectDevice(string $signature, string $fcm = null)
     {
-        $this->devicesList()->updateOrCreate(['agent_id' => agent()->id], ['fcm_token' => $fcm, 'ip' => agent()->ip]);
+        $this->devicesList()->updateOrCreate([
+            'agent_id'  => agent()->id,
+            'signature' => $signature
+        ], [
+            'fcm_token' => $fcm,
+            'ip'        => agent()->ip
+        ]);
     }
 
     /**
