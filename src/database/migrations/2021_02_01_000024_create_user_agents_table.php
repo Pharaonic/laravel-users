@@ -20,6 +20,7 @@ class CreateUserAgentsTable extends Migration
             $table->string('ip');
             $table->string('fcm_token')->nullable();
             $table->morphs('user');
+            $table->timestamp('last_action_at');
             $table->timestamps();
 
             // Relationships
