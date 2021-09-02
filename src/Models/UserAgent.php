@@ -8,6 +8,7 @@ use Pharaonic\Laravel\Agents\Models\Agent;
 /**
  * @property integer $id
  * @property integer $agent_id
+ * @property string $signature
  * @property string $ip
  * @property string|null $fcm_token
  * @property Carbon $created_at
@@ -24,7 +25,7 @@ class UserAgent extends Model
      *
      * @var array
      */
-    protected $fillable = ['agent_id', 'fcm_token', 'ip', 'user_id', 'user_type'];
+    protected $fillable = ['agent_id', 'signature', 'fcm_token', 'ip', 'user_id', 'user_type'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
