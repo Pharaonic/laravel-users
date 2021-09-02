@@ -16,6 +16,7 @@ class CreateUserAgentsTable extends Migration
         Schema::create('user_agents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('agent_id');
+            $table->string('signature');
             $table->string('ip');
             $table->string('fcm_token')->nullable();
             $table->morphs('user');
