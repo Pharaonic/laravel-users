@@ -2,6 +2,7 @@
 
 namespace Pharaonic\Laravel\Users\Traits;
 
+use Carbon\Carbon;
 use Pharaonic\Laravel\Agents\Models\Agent;
 use Pharaonic\Laravel\Users\Models\UserAgent;
 
@@ -83,11 +84,12 @@ trait HasDevices
     public function detectDevice(string $signature, string $fcm = null)
     {
         $this->devicesList()->updateOrCreate([
-            'agent_id'  => agent()->id,
-            'signature' => $signature
+            'agent_id'          => agent()->id,
+            'signature'         => $signature
         ], [
-            'fcm_token' => $fcm,
-            'ip'        => agent()->ip
+            'fcm_token'         => $fcm,
+            'ip'                => agent()->ip,
+            'last_action_at'    => Carbon::now()
         ]);
     }
 
@@ -119,6 +121,9 @@ trait HasDevices
      */
     public function getCurrentDeviceAttribute()
     {
-        return $this->devicesList()->where('agent_id', agent()->id)->with(['agent.operationSystem', 'agent.browser', 'agent.device'])->first();
+        return $this->devicesList()->where([
+            'agent_id'      => agent()->id,
+            'signature'     => request()->headers->get('device-signature')
+        ])->with(['agent.operationSystem', 'agent.browser', 'agent.device'])->first();
     }
 }
