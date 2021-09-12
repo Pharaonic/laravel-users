@@ -16,7 +16,7 @@ use Pharaonic\Laravel\Translatable\Translatable;
  */
 class Permission extends Model
 {
-    use Translatable, SoftDeletes;
+    use Translatable;
 
     /**
      * The attributes that are mass assignable.
