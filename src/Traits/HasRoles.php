@@ -49,9 +49,7 @@ trait HasRoles
     {
         if (is_array($this->rolesListArray)) return $this->rolesListArray;
 
-        return $this->rolesListArray = $this->roles->mapWithKeys(function ($item) {
-            return [$item['id'] => $item['code']];
-        })->all();
+        return $this->rolesListArray = $this->roles()->pluck('roles.code')->toArray();
     }
 
     /**
