@@ -4,6 +4,7 @@ namespace Pharaonic\Laravel\Users\Traits;
 
 use Pharaonic\Laravel\Users\Models\Permissible;
 use Pharaonic\Laravel\Users\Models\Permission;
+use Pharaonic\Laravel\Users\Models\Role;
 use Pharaonic\Laravel\Users\Traits\HasRoles;
 
 /**
@@ -50,15 +51,18 @@ trait HasPermissions
     {
         if (is_array($this->permissionsListArray)) return $this->permissionsListArray;
 
-        $permissions = $this->permissions->map(function ($item) {
-            return $item['code'];
-        })->all();
+        $permissions = $this->permissions()->pluck('permissions.code')->toArray();
 
         // Append Roles Permissions IF Found
         if (!in_array(HasRoles::class, class_uses($this))) return $permissions;
 
-        foreach ($this->roles()->with('permissions')->get() as $role)
-            $permissions = array_merge($permissions, $role->permissionsList);
+        $permissions = array_merge(
+            $permissions,
+            Permissible::where('permissible_type', Role::class)
+                ->whereIn('permissible_id', $this->roles()->pluck('roles.id')->toArray())
+                ->join('permissions', 'permissions.id', '=', 'permissibles.permission_id')
+                ->pluck('permissions.code')->toArray()
+        );
 
         return $this->permissionsListArray = $permissions;
     }
