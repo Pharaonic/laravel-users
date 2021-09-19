@@ -13,6 +13,8 @@ use Pharaonic\Laravel\Users\Traits\HasRoles;
  */
 trait HasPermissions
 {
+    protected $permissionsListArray;
+
     protected static function bootHasPermissions()
     {
         // Deleting
@@ -28,7 +30,7 @@ trait HasPermissions
     {
         return $this->morphMany(Permissible::class, 'permissible');
     }
-    
+
     /**
      * Get all attached permissions to the model.
      *
@@ -46,6 +48,8 @@ trait HasPermissions
      */
     public function getPermissionsListAttribute()
     {
+        if (is_array($this->permissionsListArray)) return $this->permissionsListArray;
+
         $permissions = $this->permissions->map(function ($item) {
             return $item['code'];
         })->all();
@@ -56,7 +60,7 @@ trait HasPermissions
         foreach ($this->roles()->with('permissions')->get() as $role)
             $permissions = array_merge($permissions, $role->permissionsList);
 
-        return $permissions;
+        return $this->permissionsListArray = $permissions;
     }
 
     /**
@@ -92,7 +96,12 @@ trait HasPermissions
      */
     public function permit(...$permissions)
     {
-        return !empty(array_filter($this->permissions()->sync($this->preparePermissionsIds($permissions), false)));
+        if (!empty(array_filter($this->permissions()->sync($this->preparePermissionsIds($permissions), false)))) {
+            $this->permissionsListArray = null;
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -143,7 +152,12 @@ trait HasPermissions
      */
     public function forbid(...$permissions)
     {
-        return $this->permissions()->detach($this->preparePermissionsIds($permissions)) > 0;
+        if ($this->permissions()->detach($this->preparePermissionsIds($permissions)) > 0) {
+            $this->permissionsListArray = null;
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -194,6 +208,11 @@ trait HasPermissions
      */
     public function syncPermissions(...$permissions)
     {
-        return !empty(array_filter($this->permissions()->sync($this->preparePermissionsIds($permissions))));
+        if (!empty(array_filter($this->permissions()->sync($this->preparePermissionsIds($permissions))))) {
+            $this->permissionsListArray = null;
+            return true;
+        }
+
+        return false;
     }
 }
