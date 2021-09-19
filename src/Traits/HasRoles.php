@@ -12,6 +12,8 @@ use Pharaonic\Laravel\Users\Models\Roleable;
  */
 trait HasRoles
 {
+    protected $rolesListArray;
+
     protected static function bootHasRoles()
     {
         // Deleting
@@ -45,7 +47,9 @@ trait HasRoles
      */
     public function getRolesListAttribute()
     {
-        return $this->roles->mapWithKeys(function ($item) {
+        if (is_array($this->rolesListArray)) return $this->rolesListArray;
+
+        return $this->rolesListArray = $this->roles->mapWithKeys(function ($item) {
             return [$item['id'] => $item['code']];
         })->all();
     }
@@ -83,7 +87,12 @@ trait HasRoles
      */
     public function entrust(...$roles)
     {
-        return !empty(array_filter($this->roles()->sync($this->prepareRolesIds($roles), false)));
+        if (!empty(array_filter($this->roles()->sync($this->prepareRolesIds($roles), false)))) {
+            $this->rolesListArray = null;
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -134,7 +143,12 @@ trait HasRoles
      */
     public function distrust(...$roles)
     {
-        return $this->roles()->detach($this->prepareRolesIds($roles)) > 1;
+        if ($this->roles()->detach($this->prepareRolesIds($roles)) > 1) {
+            $this->rolesListArray = null;
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -185,6 +199,11 @@ trait HasRoles
      */
     public function syncRoles(...$roles)
     {
-        return !empty(array_filter($this->roles()->sync($this->prepareRolesIds($roles))));
+        if (!empty(array_filter($this->roles()->sync($this->prepareRolesIds($roles))))) {
+            $this->rolesListArray = null;
+            return true;
+        }
+
+        return false;
     }
 }
