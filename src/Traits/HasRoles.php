@@ -2,8 +2,8 @@
 
 namespace Pharaonic\Laravel\Users\Traits;
 
-use Pharaonic\Laravel\Users\Models\Role;
-use Pharaonic\Laravel\Users\Models\Roleable;
+use Pharaonic\Laravel\Users\Models\Roles\Role;
+use Pharaonic\Laravel\Users\Models\Roles\Roleable;
 
 /**
  * Auth Roles Trait.
