@@ -1,9 +1,8 @@
 <?php
 
-namespace Pharaonic\Laravel\Users\Models;
+namespace Pharaonic\Laravel\Users\Models\Permissions;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Pharaonic\Laravel\Translatable\Translatable;
 
 /**

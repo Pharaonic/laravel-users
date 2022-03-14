@@ -1,6 +1,6 @@
 <?php
 
-namespace Pharaonic\Laravel\Users\Traits;
+namespace Pharaonic\Laravel\Users\Traits\Password;
 
 use Illuminate\Support\Facades\Hash;
 

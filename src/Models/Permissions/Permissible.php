@@ -1,25 +1,25 @@
 <?php
 
-namespace Pharaonic\Laravel\Users\Models;
+namespace Pharaonic\Laravel\Users\Models\Permissions;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer $id
- * @property integer $role_id
- * @property Role $role
- * 
+ * @property integer $permission_id
+ * @property Permission $permission
+ *
  * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
  */
-class Roleable extends Model
+class Permissible extends Model
 {
     /**
      * The attributes that are mass assignable.
-     * 
+     *
      * @var array
      */
-    protected $fillable = ['role_id'];
-    
+    protected $fillable = ['permission_id'];
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -30,15 +30,15 @@ class Roleable extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function role()
+    public function permission()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Permission::class);
     }
 
     /**
      * Get the parent model
      */
-    public function roleable()
+    public function permissible()
     {
         return $this->morphTo();
     }

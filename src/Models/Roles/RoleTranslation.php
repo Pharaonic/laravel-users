@@ -1,6 +1,6 @@
 <?php
 
-namespace Pharaonic\Laravel\Users\Models;
+namespace Pharaonic\Laravel\Users\Models\Roles;
 
 use Illuminate\Database\Eloquent\Model;
 

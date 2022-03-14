@@ -1,6 +1,6 @@
 {
     "name": "pharaonic/laravel-users",
-    "description": "Laravel Users (Roles & Permissions, Devices, Password: Auto Hashing & History).",
+    "description": "Laravel Users (Roles & Permissions, Devices, Password: Auto Hashing & History, Actions: Likes, Rates, Subscribes, Votes, Follows, Favourties, Bookmarks).",
     "keywords": [
         "laravel roles",
         "laravel permissions",
@@ -8,6 +8,15 @@
         "laravel user passwords",
         "laravel user passwords hashed",
         "laravel user passwords history",
+        "laravel likes",
+        "laravel rates",
+        "laravel subscribes",
+        "laravel subscribers",
+        "laravel votes",
+        "laravel follows",
+        "laravel followers",
+        "laravel favourties",
+        "laravel bookmarks",
         "laravel",
         "php"
     ],
