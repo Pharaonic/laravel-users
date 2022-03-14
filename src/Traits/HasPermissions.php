@@ -2,9 +2,9 @@
 
 namespace Pharaonic\Laravel\Users\Traits;
 
-use Pharaonic\Laravel\Users\Models\Permissible;
-use Pharaonic\Laravel\Users\Models\Permission;
-use Pharaonic\Laravel\Users\Models\Role;
+use Pharaonic\Laravel\Users\Models\Permissions\Permissible;
+use Pharaonic\Laravel\Users\Models\Permissions\Permission;
+use Pharaonic\Laravel\Users\Models\Roles\Role;
 use Pharaonic\Laravel\Users\Traits\HasRoles;
 
 /**
