@@ -143,11 +143,13 @@ trait HasDevices
     /**
      * Getting current device
      *
-     * @return UserAgent
+     * @return UserAgent|null
      */
     public function getCurrentDeviceAttribute()
     {
-        return $this->devicesList()->where('signature', $this->currentDeviceSignature)
-            ->with(['agent.operationSystem', 'agent.browser', 'agent.device'])->first();
+        if(!($signature = $this->currentDeviceSignature))
+            return null;
+        
+        return $this->devicesList()->where('signature', $signature)->with(['agent.operationSystem', 'agent.browser', 'agent.device'])->first();
     }
 }
