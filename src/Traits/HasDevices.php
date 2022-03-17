@@ -15,37 +15,13 @@ use Pharaonic\Laravel\Users\Models\UserAgent;
 trait HasDevices
 {
     /**
-     * Get all user devices
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getDevicesAttribute()
-    {
-        return Agent::with(['browser', 'device', 'operationSystem'])
-            ->join('user_agents', 'agents.id', '=', 'user_agents.agent_id')
-            ->where('user_agents.user_id', $this->getKey())
-            ->where('user_agents.user_type', get_class($this))
-            ->select([
-                'user_agents.id',
-                'user_agents.ip',
-                'agents.type',
-                'agents.user_agent',
-                'agents.device_id',
-                'agents.operation_system_id',
-                'agents.browser_id',
-                'user_agents.created_at'
-            ])
-            ->get();
-    }
-
-    /**
      * Get all deivces list.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    private function devicesList()
+    public function devices()
     {
-        return $this->morphMany(UserAgent::class, 'user');
+        return $this->morphMany(UserAgent::class, 'user')->with(['agent.browser', 'agent.device', 'agent.operationSystem']);
     }
 
     /**
@@ -55,7 +31,7 @@ trait HasDevices
      */
     public function getFcmListArrtibute()
     {
-        $list = $this->devicesList()->whereNotNull('fcm_token')->get();
+        $list = $this->devices()->whereNotNull('fcm_token')->get();
         if ($list->isEmpty()) return null;
 
         return $list->pluck('fcm_token')->toArray();
@@ -77,7 +53,7 @@ trait HasDevices
         if (!$signature && !($signature = $this->currentDeviceSignature))
             return false;
 
-        return $this->devicesList()->where([
+        return $this->devices()->where([
             'agent_id'  => agent()->id,
             'signature' => $signature
         ])->exists();
@@ -98,7 +74,7 @@ trait HasDevices
                 session()->put('device-signature', $signature);
         }
 
-        return $this->devicesList()->updateOrCreate([
+        return $this->devices()->updateOrCreate([
             'agent_id'          => agent()->id,
             'signature'         => $signature
         ], [
@@ -116,7 +92,7 @@ trait HasDevices
      */
     public function removeDevice(string $signature)
     {
-        if ($this->devicesList()->where('signature', $signature)->delete() == 0)
+        if ($this->devices()->where('signature', $signature)->delete() == 0)
             return false;
 
         if ($this->currentDeviceSignature == $signature) {
@@ -137,7 +113,7 @@ trait HasDevices
         if (session()->isStarted())
             session()->forget('device-signature');
 
-        return $this->devicesList()->delete() > 0;
+        return $this->devices()->delete() > 0;
     }
 
     /**
@@ -150,6 +126,6 @@ trait HasDevices
         if(!($signature = $this->currentDeviceSignature))
             return null;
         
-        return $this->devicesList()->where('signature', $signature)->with(['agent.operationSystem', 'agent.browser', 'agent.device'])->first();
+        return $this->devices()->where('signature', $signature)->with(['agent.operationSystem', 'agent.browser', 'agent.device'])->first();
     }
 }
