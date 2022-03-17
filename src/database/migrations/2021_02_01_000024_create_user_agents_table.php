@@ -15,11 +15,13 @@ class CreateUserAgentsTable extends Migration
     {
         Schema::create('user_agents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('agent_id');
+            $table->morphs('user');
             $table->string('signature');
+            $table->foreignId('agent_id');
+            $table->unique(['user_id', 'user_type', 'signature', 'agent_id']);
+
             $table->string('ip');
             $table->string('fcm_token')->nullable();
-            $table->morphs('user');
             $table->timestamp('last_action_at');
             $table->timestamps();
 
