@@ -32,16 +32,28 @@ class UsersServiceProvider extends ServiceProvider
     {
         // Publishes
         $this->publishes([
+            // Devices
             __DIR__ . '/database/migrations/2021_02_01_000024_create_user_agents_table.php'             => database_path('migrations/2021_02_01_000024_create_user_agents_table.php'),
 
+            // Passwords
             __DIR__ . '/database/migrations/2021_02_01_000025_create_user_password_history_table.php'   => database_path('migrations/2021_02_01_000025_create_user_password_history_table.php'),
 
+            // Roles & Permissions
             __DIR__ . '/database/migrations/2021_02_01_000026_create_permissions_table.php'             => database_path('migrations/2021_02_01_000026_create_permissions_table.php'),
             __DIR__ . '/database/migrations/2021_02_01_000027_create_permission_translations_table.php' => database_path('migrations/2021_02_01_000027_create_permission_translations_table.php'),
             __DIR__ . '/database/migrations/2021_02_01_000028_create_permissibles_table.php'            => database_path('migrations/2021_02_01_000028_create_permissibles_table.php'),
             __DIR__ . '/database/migrations/2021_02_01_000029_create_roles_table.php'                   => database_path('migrations/2021_02_01_000029_create_roles_table.php'),
             __DIR__ . '/database/migrations/2021_02_01_000030_create_role_translations_table.php'       => database_path('migrations/2021_02_01_000030_create_role_translations_table.php'),
             __DIR__ . '/database/migrations/2021_02_01_000031_create_roleables_table.php'               => database_path('migrations/2021_02_01_000031_create_roleables_table.php'),
+
+            // Actions
+            __DIR__ . '/database/migrations/2021_02_01_000077_create_likes_table.php'                   => database_path('migrations/2021_02_01_000077_create_likes_table.php'),
+            __DIR__ . '/database/migrations/2021_02_01_000078_create_follows_table.php'                 => database_path('migrations/2021_02_01_000078_create_follows_table.php'),
+            __DIR__ . '/database/migrations/2021_02_01_000079_create_favourites_table.php'              => database_path('migrations/2021_02_01_000079_create_favourites_table.php'),
+            __DIR__ . '/database/migrations/2021_02_01_000080_create_bookmarks_table.php'               => database_path('migrations/2021_02_01_000080_create_bookmarks_table.php'),
+            __DIR__ . '/database/migrations/2021_02_01_000081_create_votes_table.php'                   => database_path('migrations/2021_02_01_000081_create_votes_table.php'),
+            __DIR__ . '/database/migrations/2021_02_01_000082_create_reviews_table.php'                 => database_path('migrations/2021_02_01_000082_create_reviews_table.php'),
+            __DIR__ . '/database/migrations/2021_02_01_000083_create_subscribes_table.php'              => database_path('migrations/2021_02_01_000083_create_subscribes_table.php'),
 
         ], ['pharaonic', 'laravel-users']);
 
