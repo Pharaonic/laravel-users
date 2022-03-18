@@ -19,6 +19,10 @@
     <code>Password Hashing</code> <code>Password History</code>
 </p>
 
+<p align="center">
+    <code>Likes</code> <code>Followers</code> <code>Subscriptions</code>
+    <code>Reviews</code> <code>Rates</code> <code>Favourites</code> <code>Bookmarks</code>
+</p>
 
 ## Documentation
 
