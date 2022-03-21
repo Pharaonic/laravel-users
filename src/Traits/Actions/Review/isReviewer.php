@@ -23,7 +23,7 @@ trait isReviewer
             'comment'   => $comment,
         ])->reviewable()->associate($reviewable);
 
-        return ($vote = $query->first()) ? $vote->update([
+        return ($review = $query->first()) ? $review->update([
             'rate'      => $rate,
             'comment'   => $comment
         ]) : $query->save();
