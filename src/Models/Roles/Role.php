@@ -13,7 +13,7 @@ use Pharaonic\Laravel\Users\Traits\HasPermissions;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
- * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ * @author Moamen Eltouny (Raggi) <support@raggitech.com>
  */
 class Role extends Model
 {
@@ -63,27 +63,26 @@ class Role extends Model
      *
      * @param string $code
      * @param array|string $title
+     * @param array $permissions
      * @param string|null $locale
-     * @return Permission
+     * @return Role
      */
-    public static function create(string $code, $title, string $locale = null)
+    public static function set(string $code, $title, array $permissions = [], string $locale = null)
     {
-        $role = static::findByCode($code);
+        $role = new self;
+        $data = ['code' => $code];
 
-        if (!$role) {
-            $role = new static();
-            $role->code = $code;
-            $role->save();
-        }
+        $localKey = $role->translationsKey ?? 'locale';
 
-        if (is_array($title)) {
-            foreach ($title as $locale => $t)
-                $role->translateOrNew($locale)->title = $t;
-        } else {
-            $role->translateOrNew($locale ?? app()->getLocale())->title = $title;
-        }
+        if (is_array($title))
+            $data[$localKey] = $title;
+        else
+            $data[$localKey][$locale ?? app()->getLocale()]['title'] = $title;
 
-        $role->save();
+        $role->fill($data)->save();
+
+        if (!empty($permissions))
+            $role->syncPermissions($permissions);
 
         return $role;
     }

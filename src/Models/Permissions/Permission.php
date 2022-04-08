@@ -11,7 +11,7 @@ use Pharaonic\Laravel\Translatable\Translatable;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
- * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ * @author Moamen Eltouny (Raggi) <support@raggitech.com>
  */
 class Permission extends Model
 {
@@ -81,6 +81,31 @@ class Permission extends Model
         }
 
         $permission->save();
+
+        return $permission;
+    }
+
+    /**
+     * Create a new permissions
+     *
+     * @param string $code
+     * @param array|string $title
+     * @param string|null $locale
+     * @return Permission
+     */
+    public static function set(string $code, $title, string $locale = null)
+    {
+        $permission = new self;
+        $data = ['code' => $code];
+
+        $localKey = $permission->translationsKey ?? 'locale';
+
+        if (is_array($title))
+            $data[$localKey] = $title;
+        else
+            $data[$localKey][$locale ?? app()->getLocale()]['title'] = $title;
+
+        $permission->fill($data)->save();
 
         return $permission;
     }
