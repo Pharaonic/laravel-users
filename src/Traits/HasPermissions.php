@@ -10,7 +10,7 @@ use Pharaonic\Laravel\Users\Traits\HasRoles;
 /**
  * Auth Permissions Trait.
  *
- * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ * @author Moamen Eltouny (Raggi) <support@raggitech.com>
  */
 trait HasPermissions
 {

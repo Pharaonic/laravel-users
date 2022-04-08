@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $role_id
  * @property Role $role
  * 
- * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ * @author Moamen Eltouny (Raggi) <support@raggitech.com>
  */
 class Roleable extends Model
 {
@@ -19,7 +19,7 @@ class Roleable extends Model
      * @var array
      */
     protected $fillable = ['role_id'];
-    
+
     /**
      * Indicates if the model should be timestamped.
      *

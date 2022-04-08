@@ -8,7 +8,7 @@ use Pharaonic\Laravel\Users\Models\UserPasswordHistory;
  * Logging Hashed Passwords
  * For Recovery Issues (with last password)
  *
- * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ * @author Moamen Eltouny (Raggi) <support@raggitech.com>
  */
 trait HasPasswordHistory
 {

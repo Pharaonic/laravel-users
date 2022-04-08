@@ -24,14 +24,14 @@
     "authors": [
         {
             "name": "Moamen Eltouny (Raggi)",
-            "email": "raggi@raggitech.com"
+            "email": "support@raggitech.com"
         }
     ],
     "require": {
         "php": ">=7.2",
         "laravel/framework": ">=6.0",
-        "pharaonic/laravel-agents-detector": ">=1.0.3",
-        "pharaonic/laravel-translatable": ">=1.0.0"
+        "pharaonic/laravel-agents-detector": "^1.0.3",
+        "pharaonic/laravel-translatable": "^2.0.0"
     },
     "config": {
         "sort-packages": true

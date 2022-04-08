@@ -10,7 +10,7 @@ use Pharaonic\Laravel\Users\Models\UserAgent;
 /**
  * Relate the user with his/her devices.
  *
- * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ * @author Moamen Eltouny (Raggi) <support@raggitech.com>
  */
 trait HasDevices
 {
@@ -123,9 +123,9 @@ trait HasDevices
      */
     public function getCurrentDeviceAttribute()
     {
-        if(!($signature = $this->currentDeviceSignature))
+        if (!($signature = $this->currentDeviceSignature))
             return null;
-        
+
         return $this->devices()->where('signature', $signature)->with(['agent.operationSystem', 'agent.browser', 'agent.device'])->first();
     }
 }

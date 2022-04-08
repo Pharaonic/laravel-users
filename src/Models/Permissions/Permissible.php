@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $permission_id
  * @property Permission $permission
  *
- * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ * @author Moamen Eltouny (Raggi) <support@raggitech.com>
  */
 class Permissible extends Model
 {

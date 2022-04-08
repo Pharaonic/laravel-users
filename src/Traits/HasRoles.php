@@ -8,7 +8,7 @@ use Pharaonic\Laravel\Users\Models\Roles\Roleable;
 /**
  * Auth Roles Trait.
  *
- * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ * @author Moamen Eltouny (Raggi) <support@raggitech.com>
  */
 trait HasRoles
 {

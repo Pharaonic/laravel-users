@@ -16,7 +16,7 @@ use Pharaonic\Laravel\Agents\Models\Agent;
  * @property Agent $agent
  * @property Object $user
  *
- * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ * @author Moamen Eltouny (Raggi) <support@raggitech.com>
  */
 class UserPasswordHistory extends Model
 {

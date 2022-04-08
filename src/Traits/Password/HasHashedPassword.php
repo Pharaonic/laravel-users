@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 /**
  * Hashing User Password
  *
- * @author Moamen Eltouny (Raggi) <raggi@raggitech.com>
+ * @author Moamen Eltouny (Raggi) <support@raggitech.com>
  */
 trait HasHashedPassword
 {
