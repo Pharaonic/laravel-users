@@ -4,7 +4,6 @@ namespace Pharaonic\Laravel\Users\Models\Roles;
 
 use Illuminate\Database\Eloquent\Model;
 use Pharaonic\Laravel\Translatable\Translatable;
-use Pharaonic\Laravel\Users\Models\Roleable;
 use Pharaonic\Laravel\Users\Traits\HasPermissions;
 
 /**
