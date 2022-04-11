@@ -56,36 +56,6 @@ class Permission extends Model
     }
 
     /**
-     * Create a new permission
-     *
-     * @param string $code
-     * @param array|string $title
-     * @param string|null $locale
-     * @return Permission
-     */
-    public static function create(string $code, $title, string $locale = null)
-    {
-        $permission = static::findByCode($code);
-
-        if (!$permission) {
-            $permission = new static();
-            $permission->code = $code;
-            $permission->save();
-        }
-
-        if (is_array($title)) {
-            foreach ($title as $locale => $t)
-                $permission->translateOrNew($locale)->title = $t;
-        } else {
-            $permission->translateOrNew($locale ?? app()->getLocale())->title = $title;
-        }
-
-        $permission->save();
-
-        return $permission;
-    }
-
-    /**
      * Create a new permissions
      *
      * @param string $code
