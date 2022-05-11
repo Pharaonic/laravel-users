@@ -75,68 +75,14 @@ class UsersServiceProvider extends ServiceProvider
         $router->aliasMiddleware('entrusted', Entrusted::class);
         $router->aliasMiddleware('entrustedAny', EntrustedAny::class);
 
-        // ROLES
-        Blade::if('entrusted', function (...$roles) {
-            if (empty($roles)) return;
-
-            return !auth()->check() ? false : auth()->user()->entrusted($this->prepareParamsArray($roles));
-        });
-
-        Blade::if('entrustedAny', function (...$roles) {
-            if (empty($roles)) return;
-
-            return !auth()->check() ? false : auth()->user()->entrustedAny($this->prepareParamsArray($roles));
-        });
-
-        Blade::if('distrusted', function (...$roles) {
-            if (empty($roles)) return;
-
-            return !auth()->check() ? false : auth()->user()->distrusted($this->prepareParamsArray($roles));
-        });
-
-        Blade::if('distrustedAny', function (...$roles) {
-            if (empty($roles)) return;
-
-            return !auth()->check() ? false : auth()->user()->distrustedAny($this->prepareParamsArray($roles));
-        });
-
-        // PERMISSIONS
-        Blade::if('permitted', function (...$permissions) {
-            if (empty($permissions)) return;
-
-            return !auth()->check() ? false : auth()->user()->permitted($this->prepareParamsArray($permissions));
-        });
-
-        Blade::if('permittedAny', function (...$permissions) {
-            if (empty($permissions)) return;
-
-            return !auth()->check() ? false : auth()->user()->permittedAny($this->prepareParamsArray($permissions));
-        });
-
-        Blade::if('forbad', function (...$permissions) {
-            if (empty($permissions)) return;
-
-            return !auth()->check() ? false : auth()->user()->forbad($this->prepareParamsArray($permissions));
-        });
-
-        Blade::if('forbadAny', function (...$permissions) {
-            if (empty($permissions)) return;
-
-            return !auth()->check() ? false : auth()->user()->forbadAny($this->prepareParamsArray($permissions));
-        });
-    }
-
-    /**
-     * Prepare Roles & Permissions
-     *
-     * @param array $params
-     * @return array
-     */
-    private function prepareParamsArray($params)
-    {
-        if (is_array($params[0])) $params = $params[0];
-        if (is_string($params)) $params = explode(',', $params);
-
-        return $params;
+        // Directives
+        foreach ([
+            'entrusted', 'entrustedAny', 'distrusted', 'distrustedAny',
+            'permitted', 'permittedAny', 'forbad', 'forbadAny'
+        ] as $action) {
+            Blade::if($action, function (...$roles) {
+                return $action($roles);
+            });
+        }
     }
 }
