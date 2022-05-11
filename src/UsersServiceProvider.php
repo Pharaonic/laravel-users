@@ -80,8 +80,8 @@ class UsersServiceProvider extends ServiceProvider
             'entrusted', 'entrustedAny', 'distrusted', 'distrustedAny',
             'permitted', 'permittedAny', 'forbad', 'forbadAny'
         ] as $action) {
-            Blade::if($action, function (...$roles) {
-                return $action($roles);
+            Blade::if($action, function (...$list) use ($action) {
+                return $action($list);
             });
         }
     }
