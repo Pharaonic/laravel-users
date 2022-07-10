@@ -15,8 +15,10 @@ trait isSubscribable
      */
     public function subscribeBy(Model $subscriber)
     {
-        $query = $this->subscriptions()->make(['subscribable' => $this])->subscriber()->associate($subscriber);
-        return $query->exists() ? true : $query->save();
+        if ($this->subscribedBy($subscriber))
+            return true;
+
+        return $this->subscriptions()->make(['subscribable' => $this])->subscriber()->associate($subscriber)->save();
     }
 
     /**
@@ -27,8 +29,8 @@ trait isSubscribable
      */
     public function unSubscribeBy(Model $subscriber)
     {
-        if ($subscriber = $this->subscriptions()->make(['subscribable' => $this])->subscriber()->associate($subscriber)->first())
-            return $subscriber->delete();
+        if ($subscription = $this->subscriptions()->where(['subscriber_id' => $subscriber->getKey(), 'subscriber_type' => get_class($subscriber)])->first())
+            return $subscription->delete();
 
         return false;
     }
@@ -41,7 +43,7 @@ trait isSubscribable
      */
     public function subscribedBy(Model $subscriber)
     {
-        return $this->subscriptions()->make(['subscribable' => $this])->subscriber()->associate($subscriber)->exists();
+        return $this->subscriptions()->where(['subscriber_id' => $subscriber->getKey(), 'subscriber_type' => get_class($subscriber)])->exists();
     }
 
     /**
