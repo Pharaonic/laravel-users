@@ -15,8 +15,10 @@ trait isFollower
      */
     public function follow(Model $followable)
     {
-        $query = $this->follows()->make(['follower' => $this])->followable()->associate($followable);
-        return $query->exists() ? true : $query->save();
+        if ($this->followed($followable))
+            return true;
+
+        return $this->follows()->make(['follower' => $this])->followable()->associate($followable)->save();
     }
 
     /**
@@ -27,8 +29,8 @@ trait isFollower
      */
     public function unfollow(Model $followable)
     {
-        if ($followable = $this->follows()->make(['follower' => $this])->followable()->associate($followable)->first())
-            return $followable->delete();
+        if ($follow = $this->follows()->where(['followable_id' => $followable->getKey(), 'followable_type' => get_class($followable)])->first())
+            return $follow->delete();
 
         return false;
     }
@@ -41,7 +43,7 @@ trait isFollower
      */
     public function followed(Model $followable)
     {
-        return $this->follows()->make(['follower' => $this])->followable()->associate($followable)->exists();
+        return $this->follows()->where(['followable_id' => $followable->getKey(), 'followable_type' => get_class($followable)])->exists();
     }
 
     /**
