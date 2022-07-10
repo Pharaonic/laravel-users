@@ -19,8 +19,7 @@ class UsersServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Migration Loading
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        // Publish your migrations as you want
     }
 
     /**
