@@ -8,6 +8,17 @@ use Pharaonic\Laravel\Users\Models\Actions\Review;
 trait isReviewer
 {
     /**
+     * Get Review Object
+     *
+     * @param Model $reviewable
+     * @return Vote|null
+     */
+    public function getReview(Model $reviewable)
+    {
+        return $this->reviews()->where(['reviewable_id' => $reviewable->getKey(), 'reviewable_type' => get_class($reviewable)])->first();
+    }
+
+    /**
      * Review Model
      *
      * @param Model $reviewable
@@ -17,16 +28,18 @@ trait isReviewer
      */
     public function review(Model $reviewable, float $rate = 0, string $comment = null)
     {
-        $query = $this->reviews()->make([
-            'reviewer'  => $this,
-            'rate'      => $rate,
-            'comment'   => $comment,
-        ])->reviewable()->associate($reviewable);
-
-        return ($review = $query->first()) ? $review->update([
-            'rate'      => $rate,
-            'comment'   => $comment
-        ]) : $query->save();
+        if ($review = $this->getReview($reviewable)) {
+            return $review->update([
+                'rate'      => $rate,
+                'comment'   => $comment
+            ]);
+        } else {
+            return $this->reviews()->make([
+                'reviewer'  => $this,
+                'rate'      => $rate,
+                'comment'   => $comment,
+            ])->reviewable()->associate($reviewable)->save();
+        }
     }
 
     /**
@@ -37,8 +50,8 @@ trait isReviewer
      */
     public function unReview(Model $reviewable)
     {
-        if ($reviewable = $this->reviews()->make(['reviewer' => $this])->reviewable()->associate($reviewable)->first())
-            return $reviewable->delete();
+        if ($review = $this->getReview($reviewable))
+            return $review->delete();
 
         return false;
     }
@@ -51,7 +64,7 @@ trait isReviewer
      */
     public function reviewed(Model $reviewable)
     {
-        return $this->reviews()->make(['reviewer' => $this])->reviewable()->associate($reviewable)->exists();
+        return $this->reviews()->where(['reviewable_id' => $reviewable->getKey(), 'reviewable_type' => get_class($reviewable)])->exists();
     }
 
     /**
