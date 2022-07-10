@@ -8,6 +8,17 @@ use Pharaonic\Laravel\Users\Models\Actions\Vote;
 trait isVotable
 {
     /**
+     * Get Vote Object
+     *
+     * @param Model $voter
+     * @return Vote|null
+     */
+    public function getVote(Model $voter)
+    {
+        return $this->votes()->where(['voter_id' => $voter->getKey(), 'voter_type' => get_class($voter)])->first();
+    }
+
+    /**
      * VoteUp with a Model
      *
      * @param Model $voter
@@ -15,8 +26,11 @@ trait isVotable
      */
     public function voteUpBy(Model $voter)
     {
-        $query = $this->votes()->make(['votable' => $this, 'vote' => true])->voter()->associate($voter);
-        return ($vote = $query->first()) ? $vote->update(['vote' => true]) : $query->save();
+        if ($vote = $this->getVote($voter)) {
+            return $vote->update(['vote' => true]);
+        } else {
+            return $this->votes()->make(['votable' => $this, 'vote' => true])->voter()->associate($voter)->save();
+        }
     }
 
     /**
@@ -27,8 +41,11 @@ trait isVotable
      */
     public function voteDownBy(Model $voter)
     {
-        $query = $this->votes()->make(['votable' => $this, 'vote' => false])->voter()->associate($voter);
-        return ($vote = $query->first()) ? $vote->update(['vote' => false]) : $query->save();
+        if ($vote = $this->getVote($voter)) {
+            return $vote->update(['vote' => false]);
+        } else {
+            return $this->votes()->make(['votable' => $this, 'vote' => false])->voter()->associate($voter)->save();
+        }
     }
 
     /**
@@ -39,8 +56,8 @@ trait isVotable
      */
     public function unVoteBy(Model $voter)
     {
-        if ($voter = $this->votes()->make(['votable' => $this])->voter()->associate($voter)->first())
-            return $voter->delete();
+        if ($vote = $this->getVote($voter))
+            return $vote->delete();
 
         return false;
     }
@@ -53,7 +70,7 @@ trait isVotable
      */
     public function votedBy(Model $voter)
     {
-        return $this->votes()->make(['votable' => $this])->voter()->associate($voter)->exists();
+        return $this->votes()->where(['voter_id' => $voter->getKey(), 'voter_type' => get_class($voter)])->exists();
     }
 
     /**
