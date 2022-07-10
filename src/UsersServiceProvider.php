@@ -53,6 +53,7 @@ class UsersServiceProvider extends ServiceProvider
             __DIR__ . '/database/migrations/2021_02_01_000081_create_votes_table.php'                   => database_path('migrations/2021_02_01_000081_create_votes_table.php'),
             __DIR__ . '/database/migrations/2021_02_01_000082_create_reviews_table.php'                 => database_path('migrations/2021_02_01_000082_create_reviews_table.php'),
             __DIR__ . '/database/migrations/2021_02_01_000083_create_subscribes_table.php'              => database_path('migrations/2021_02_01_000083_create_subscribes_table.php'),
+            __DIR__ . '/database/migrations/2021_02_01_000084_create_comments_table.php'                => database_path('migrations/2021_02_01_000084_create_comments_table.php'),
 
         ], ['pharaonic', 'laravel-users']);
 
