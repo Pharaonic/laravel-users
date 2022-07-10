@@ -8,6 +8,17 @@ use Pharaonic\Laravel\Users\Models\Actions\Bookmark;
 trait isBookmarkable
 {
     /**
+     * Get Bookmark Object
+     *
+     * @param Model $bookmarker
+     * @return Bookmark|null
+     */
+    public function getBookmark(Model $bookmarker)
+    {
+        return $this->bookmarks()->where(['bookmarker_id' => $bookmarker->getKey(), 'bookmarker_type' => get_class($bookmarker)])->first();
+    }
+
+    /**
      * Bookmark with a Model
      *
      * @param Model $bookmarker
@@ -16,8 +27,11 @@ trait isBookmarkable
      */
     public function bookmarkBy(Model $bookmarker, array $data = null)
     {
-        $query = $this->bookmarks()->make(['bookmarkable' => $this, 'data' => $data])->bookmarker()->associate($bookmarker);
-        return ($bookmark = $query->first()) ? $bookmark->update(['data' => $data]) : $query->save();
+        if ($bookmark = $this->getBookmark($bookmarker)) {
+            return $bookmark->update(['data' => $data]);
+        } else {
+            return $this->bookmarks()->make(['bookmarkable' => $this, 'data' => $data])->bookmarker()->associate($bookmarker)->save();
+        }
     }
 
     /**
@@ -28,8 +42,8 @@ trait isBookmarkable
      */
     public function unBookmarkBy(Model $bookmarker)
     {
-        if ($bookmarker = $this->bookmarks()->make(['bookmarkable' => $this])->bookmarker()->associate($bookmarker)->first())
-            return $bookmarker->delete();
+        if ($bookmark = $this->getBookmark($bookmarker))
+            return $bookmark->delete();
 
         return false;
     }
@@ -42,7 +56,7 @@ trait isBookmarkable
      */
     public function bookmarkedBy(Model $bookmarker)
     {
-        return $this->bookmarks()->make(['bookmarkable' => $this])->bookmarker()->associate($bookmarker)->exists();
+        return $this->bookmarks()->where(['bookmarker_id' => $bookmarker->getKey(), 'bookmarker_type' => get_class($bookmarker)])->exists();
     }
 
     /**

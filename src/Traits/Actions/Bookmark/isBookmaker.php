@@ -8,6 +8,17 @@ use Pharaonic\Laravel\Users\Models\Actions\Bookmark;
 trait isBookmaker
 {
     /**
+     * Get Bookmark Object
+     *
+     * @param Model $bookmarkable
+     * @return Bookmark|null
+     */
+    public function getBookmark(Model $bookmarkable)
+    {
+        return $this->bookmarks()->where(['bookmarkable_id' => $bookmarkable->getKey(), 'bookmarkable_type' => get_class($bookmarkable)])->first();
+    }
+
+    /**
      * Bookmark Model
      *
      * @param Model $bookmarkable
@@ -16,8 +27,11 @@ trait isBookmaker
      */
     public function bookmark(Model $bookmarkable, array $data = null)
     {
-        $query = $this->bookmarks()->make(['bookmarker' => $this, 'data' => $data])->bookmarkable()->associate($bookmarkable);
-        return ($bookmark = $query->first()) ? $bookmark->update(['data' => $data]) : $query->save();
+        if ($bookmark = $this->getBookmark($bookmarkable)) {
+            return $bookmark->update(['data' => $data]);
+        } else {
+            return $this->bookmarks()->make(['bookmarker' => $this, 'data' => $data])->bookmarkable()->associate($bookmarkable)->save();
+        }
     }
 
     /**
@@ -28,21 +42,21 @@ trait isBookmaker
      */
     public function unbookmark(Model $bookmarkable)
     {
-        if ($bookmarkable = $this->bookmarks()->make(['bookmarker' => $this])->bookmarkable()->associate($bookmarkable)->first())
-            return $bookmarkable->delete();
+        if ($bookmark = $this->getBookmark($bookmarkable))
+            return $bookmark->delete();
 
         return false;
     }
 
     /**
-     * Has Bookmarked By Bookmarker
+     * Has Bookmarked By This User
      *
      * @param Model $bookmarkable
      * @return boolean
      */
     public function bookmarked(Model $bookmarkable)
     {
-        return $this->bookmarks()->make(['bookmarker' => $this])->bookmarkable()->associate($bookmarkable)->exists();
+        return $this->bookmarks()->where(['bookmarkable_id' => $bookmarkable->getKey(), 'bookmarkable_type' => get_class($bookmarkable)])->exists();
     }
 
     /**
