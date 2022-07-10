@@ -27,7 +27,7 @@ trait isLiker
      */
     public function unlike(Model $likeable)
     {
-        if ($likeable = $this->likes()->where(['likeable_id' => $likeable->id, 'likeable_type' => get_class($likeable)])->first())
+        if ($likeable = $this->likes()->where(['likeable_id' => $likeable->getKey(), 'likeable_type' => get_class($likeable)])->first())
             return $likeable->delete();
 
         return false;
@@ -41,7 +41,7 @@ trait isLiker
      */
     public function liked(Model $likeable)
     {
-        return $this->likes()->where(['likeable_id' => $likeable->id, 'likeable_type' => get_class($likeable)])->exists();
+        return $this->likes()->where(['likeable_id' => $likeable->getKey(), 'likeable_type' => get_class($likeable)])->exists();
     }
 
     /**
