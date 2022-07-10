@@ -20,20 +20,6 @@ trait isCommenter
     }
 
     /**
-     * Uncomment Model
-     *
-     * @param Model $commentable
-     * @return boolean
-     */
-    public function uncomment(Model $commentable)
-    {
-        if ($comment = $this->comments()->where(['commentable_id' => $commentable->getKey(), 'commentable_type' => get_class($commentable)])->first())
-            return $comment->delete();
-
-        return false;
-    }
-
-    /**
      * Has Commented By Commenter
      *
      * @param Model $commentable
