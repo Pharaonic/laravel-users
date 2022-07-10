@@ -15,8 +15,10 @@ trait isLiker
      */
     public function like(Model $likeable)
     {
-        $query = $this->likes()->make(['liker' => $this])->likeable()->associate($likeable);
-        return $query->liked($likeable) ? true : $query->save();
+        if ($this->liked($likeable))
+            return true;
+
+        return $this->likes()->make(['liker' => $this])->likeable()->associate($likeable)->save();
     }
 
     /**
@@ -27,8 +29,8 @@ trait isLiker
      */
     public function unlike(Model $likeable)
     {
-        if ($likeable = $this->likes()->where(['likeable_id' => $likeable->getKey(), 'likeable_type' => get_class($likeable)])->first())
-            return $likeable->delete();
+        if ($like = $this->likes()->where(['likeable_id' => $likeable->getKey(), 'likeable_type' => get_class($likeable)])->first())
+            return $like->delete();
 
         return false;
     }
