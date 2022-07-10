@@ -15,8 +15,10 @@ trait isFavorer
      */
     public function favourite(Model $favourable)
     {
-        $query = $this->favourites()->make(['favorer' => $this])->favourable()->associate($favourable);
-        return $query->exists() ? true : $query->save();
+        if ($this->favoured($favourable))
+            return true;
+
+        return $this->favourites()->make(['favorer' => $this])->favourable()->associate($favourable)->save();
     }
 
     /**
@@ -27,8 +29,8 @@ trait isFavorer
      */
     public function unfavourite(Model $favourable)
     {
-        if ($favourable = $this->favourites()->make(['favorer' => $this])->favourable()->associate($favourable)->first())
-            return $favourable->delete();
+        if ($favourite = $this->favourites()->where(['favourable_id' => $favourable->getKey(), 'favourable_type' => get_class($favourable)])->first())
+            return $favourite->delete();
 
         return false;
     }
@@ -41,7 +43,7 @@ trait isFavorer
      */
     public function favoured(Model $favourable)
     {
-       return $this->favourites()->make(['favorer' => $this])->favourable()->associate($favourable)->exists();
+        return $this->favourites()->where(['favourable_id' => $favourable->getKey(), 'favourable_type' => get_class($favourable)])->exists();
     }
 
     /**
@@ -51,6 +53,6 @@ trait isFavorer
      */
     public function favourites()
     {
-         return $this->morphMany(Favourite::class, 'favorer');
+        return $this->morphMany(Favourite::class, 'favorer');
     }
 }
