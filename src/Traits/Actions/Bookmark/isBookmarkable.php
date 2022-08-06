@@ -30,7 +30,7 @@ trait isBookmarkable
         if ($bookmark = $this->getBookmark($bookmarker)) {
             return $bookmark->update(['data' => $data]);
         } else {
-            return $this->bookmarks()->make(['bookmarkable' => $this, 'data' => $data])->bookmarker()->associate($bookmarker)->save();
+            return $this->bookmarks()->make(['data' => $data])->bookmarker()->associate($bookmarker)->save();
         }
     }
 

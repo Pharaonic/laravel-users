@@ -18,7 +18,7 @@ trait isFollowable
         if ($this->followedBy($follower))
             return true;
 
-        return $this->follows()->make(['followable' => $this])->follower()->associate($follower)->save();
+        return $this->follows()->make()->follower()->associate($follower)->save();
     }
 
     /**

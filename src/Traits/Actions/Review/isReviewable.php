@@ -35,7 +35,6 @@ trait isReviewable
             ]);
         } else {
             return $this->reviews()->make([
-                'reviewable' => $this,
                 'rate'      => $rate,
                 'comment'   => $comment
             ])->reviewer()->associate($reviewer)->save();

@@ -14,9 +14,9 @@ trait isCommentable
      * @param string $comment
      * @return boolean
      */
-    public function commentBy(Authenticatable $commenter, string $body)
+    public function commentBy(Authenticatable $commenter, string $comment)
     {
-        return $this->comments()->make(['commentable' => $this, 'comment' => $body])->commenter()->associate($commenter)->save();
+        return $this->comments()->make(['comment' => $comment])->commenter()->associate($commenter)->save();
     }
 
     /**

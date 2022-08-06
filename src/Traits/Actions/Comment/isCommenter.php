@@ -14,9 +14,9 @@ trait isCommenter
      * @param string $comment
      * @return boolean
      */
-    public function comment(Model $commentable, string $body)
+    public function comment(Model $commentable, string $comment)
     {
-        return $this->comments()->make(['commenter' => $this, 'comment' => $body])->commentable()->associate($commentable)->save();
+        return $this->comments()->make(['comment' => $comment])->commentable()->associate($commentable)->save();
     }
 
     /**

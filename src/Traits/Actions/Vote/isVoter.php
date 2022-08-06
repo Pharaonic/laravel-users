@@ -29,7 +29,7 @@ trait isVoter
         if ($vote = $this->getVote($votable)) {
             return $vote->update(['vote' => true]);
         } else {
-            return $this->votes()->make(['voter' => $this, 'vote' => true])->votable()->associate($votable)->save();
+            return $this->votes()->make(['vote' => true])->votable()->associate($votable)->save();
         }
     }
 
@@ -44,7 +44,7 @@ trait isVoter
         if ($vote = $this->getVote($votable)) {
             return $vote->update(['vote' => false]);
         } else {
-            return $this->votes()->make(['voter' => $this, 'vote' => false])->votable()->associate($votable)->save();
+            return $this->votes()->make(['vote' => false])->votable()->associate($votable)->save();
         }
     }
 

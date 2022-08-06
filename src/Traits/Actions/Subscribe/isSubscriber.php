@@ -18,7 +18,7 @@ trait isSubscriber
         if ($this->subscribed($subscribable))
             return true;
 
-        return $this->subscriptions()->make(['subscriber' => $this])->subscribable()->associate($subscribable)->save();
+        return $this->subscriptions()->make()->subscribable()->associate($subscribable)->save();
     }
 
     /**

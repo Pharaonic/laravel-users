@@ -18,7 +18,7 @@ trait isFavourable
         if ($this->favouredBy($favorer))
             return true;
 
-        return $this->favourites()->make(['favourable' => $this])->favorer()->associate($favorer)->save();
+        return $this->favourites()->make()->favorer()->associate($favorer)->save();
     }
 
     /**

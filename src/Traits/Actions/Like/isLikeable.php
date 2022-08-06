@@ -18,7 +18,7 @@ trait isLikeable
         if ($this->likedBy($liker))
             return true;
 
-        return $this->likes()->make(['likeable' => $this])->liker()->associate($liker)->save();
+        return $this->likes()->make()->liker()->associate($liker)->save();
     }
 
     /**
