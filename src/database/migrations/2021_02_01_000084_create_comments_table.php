@@ -25,6 +25,7 @@ class CreateCommentsTable extends Migration
             $table->mediumText('comment');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

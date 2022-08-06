@@ -3,11 +3,12 @@
 namespace Pharaonic\Laravel\Users\Models\Actions;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Pharaonic\Laravel\Users\Traits\Actions\Comment\isCommentable;
 
 class Comment extends Model
 {
-    use isCommentable;
+    use isCommentable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
