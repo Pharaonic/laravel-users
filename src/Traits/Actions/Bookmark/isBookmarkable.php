@@ -2,7 +2,7 @@
 
 namespace Pharaonic\Laravel\Users\Traits\Actions\Bookmark;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Pharaonic\Laravel\Users\Models\Actions\Bookmark;
 
 trait isBookmarkable
@@ -10,10 +10,10 @@ trait isBookmarkable
     /**
      * Get Bookmark Object
      *
-     * @param Model $bookmarker
+     * @param Authenticatable $bookmarker
      * @return Bookmark|null
      */
-    public function getBookmark(Model $bookmarker)
+    public function getBookmark(Authenticatable $bookmarker)
     {
         return $this->bookmarks()->where(['bookmarker_id' => $bookmarker->getKey(), 'bookmarker_type' => get_class($bookmarker)])->first();
     }
@@ -21,11 +21,11 @@ trait isBookmarkable
     /**
      * Bookmark with a Model
      *
-     * @param Model $bookmarker
+     * @param Authenticatable $bookmarker
      * @param array|null $data
      * @return boolean
      */
-    public function bookmarkBy(Model $bookmarker, array $data = null)
+    public function bookmarkBy(Authenticatable $bookmarker, array $data = null)
     {
         if ($bookmark = $this->getBookmark($bookmarker)) {
             return $bookmark->update(['data' => $data]);
@@ -35,12 +35,12 @@ trait isBookmarkable
     }
 
     /**
-     * Unbookmark with a Model
+     * Un-bookmark with a Model
      *
-     * @param Model $bookmarker
+     * @param Authenticatable $bookmarker
      * @return boolean
      */
-    public function unBookmarkBy(Model $bookmarker)
+    public function unBookmarkBy(Authenticatable $bookmarker)
     {
         if ($bookmark = $this->getBookmark($bookmarker))
             return $bookmark->delete();
@@ -51,10 +51,10 @@ trait isBookmarkable
     /**
      * Has Bookmarked By Bookmarker
      *
-     * @param Model $bookmarker
+     * @param Authenticatable $bookmarker
      * @return boolean
      */
-    public function bookmarkedBy(Model $bookmarker)
+    public function bookmarkedBy(Authenticatable $bookmarker)
     {
         return $this->bookmarks()->where(['bookmarker_id' => $bookmarker->getKey(), 'bookmarker_type' => get_class($bookmarker)])->exists();
     }

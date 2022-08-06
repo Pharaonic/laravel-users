@@ -2,7 +2,7 @@
 
 namespace Pharaonic\Laravel\Users\Traits\Actions\Like;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Pharaonic\Laravel\Users\Models\Actions\Like;
 
 trait isLikeable
@@ -10,10 +10,10 @@ trait isLikeable
     /**
      * Like with a Model
      *
-     * @param Model $liker
+     * @param Authenticatable $liker
      * @return boolean
      */
-    public function likeBy(Model $liker)
+    public function likeBy(Authenticatable $liker)
     {
         if ($this->likedBy($liker))
             return true;
@@ -24,10 +24,10 @@ trait isLikeable
     /**
      * Unlike with a Model
      *
-     * @param Model $liker
+     * @param Authenticatable $liker
      * @return boolean
      */
-    public function unLikeBy(Model $liker)
+    public function unLikeBy(Authenticatable $liker)
     {
         if ($like = $this->likes()->where(['liker_id' => $liker->getKey(), 'liker_type' => get_class($liker)])->first())
             return $like->delete();
@@ -38,10 +38,10 @@ trait isLikeable
     /**
      * Has Liked By Liker
      *
-     * @param Model $liker
+     * @param Authenticatable $liker
      * @return boolean
      */
-    public function likedBy(Model $liker)
+    public function likedBy(Authenticatable $liker)
     {
         return $this->likes()->where(['liker_id' => $liker->getKey(), 'liker_type' => get_class($liker)])->exists();
     }

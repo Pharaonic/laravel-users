@@ -2,7 +2,7 @@
 
 namespace Pharaonic\Laravel\Users\Traits\Actions\Vote;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Pharaonic\Laravel\Users\Models\Actions\Vote;
 
 trait isVotable
@@ -10,10 +10,10 @@ trait isVotable
     /**
      * Get Vote Object
      *
-     * @param Model $voter
+     * @param Authenticatable $voter
      * @return Vote|null
      */
-    public function getVote(Model $voter)
+    public function getVote(Authenticatable $voter)
     {
         return $this->votes()->where(['voter_id' => $voter->getKey(), 'voter_type' => get_class($voter)])->first();
     }
@@ -21,10 +21,10 @@ trait isVotable
     /**
      * VoteUp with a Model
      *
-     * @param Model $voter
+     * @param Authenticatable $voter
      * @return boolean
      */
-    public function voteUpBy(Model $voter)
+    public function voteUpBy(Authenticatable $voter)
     {
         if ($vote = $this->getVote($voter)) {
             return $vote->update(['vote' => true]);
@@ -36,10 +36,10 @@ trait isVotable
     /**
      * VoteDown with a Model
      *
-     * @param Model $voter
+     * @param Authenticatable $voter
      * @return boolean
      */
-    public function voteDownBy(Model $voter)
+    public function voteDownBy(Authenticatable $voter)
     {
         if ($vote = $this->getVote($voter)) {
             return $vote->update(['vote' => false]);
@@ -51,10 +51,10 @@ trait isVotable
     /**
      * Unvote with a Model
      *
-     * @param Model $voter
+     * @param Authenticatable $voter
      * @return boolean
      */
-    public function unVoteBy(Model $voter)
+    public function unVoteBy(Authenticatable $voter)
     {
         if ($vote = $this->getVote($voter))
             return $vote->delete();
@@ -65,10 +65,10 @@ trait isVotable
     /**
      * Has Voted By Voter
      *
-     * @param Model $voter
+     * @param Authenticatable $voter
      * @return boolean
      */
-    public function votedBy(Model $voter)
+    public function votedBy(Authenticatable $voter)
     {
         return $this->votes()->where(['voter_id' => $voter->getKey(), 'voter_type' => get_class($voter)])->exists();
     }

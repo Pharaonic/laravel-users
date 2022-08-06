@@ -2,7 +2,7 @@
 
 namespace Pharaonic\Laravel\Users\Traits\Actions\Follow;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Pharaonic\Laravel\Users\Models\Actions\Follow;
 
 trait isFollowable
@@ -10,10 +10,10 @@ trait isFollowable
     /**
      * Follow with a Model
      *
-     * @param Model follower
+     * @param Authenticatable follower
      * @return boolean
      */
-    public function followBy(Model $follower)
+    public function followBy(Authenticatable $follower)
     {
         if ($this->followedBy($follower))
             return true;
@@ -22,12 +22,12 @@ trait isFollowable
     }
 
     /**
-     * Unfollow with a Model
+     * Un-follow with a Model
      *
-     * @param Model follower
+     * @param Authenticatable follower
      * @return boolean
      */
-    public function unFollowBy(Model $follower)
+    public function unFollowBy(Authenticatable $follower)
     {
         if ($follow = $this->follows()->where(['follower_id' => $follower->getKey(), 'follower_type' => get_class($follower)])->first())
             return $follow->delete();
@@ -38,10 +38,10 @@ trait isFollowable
     /**
      * Has Followed By Follower
      *
-     * @param Model follower
+     * @param Authenticatable follower
      * @return boolean
      */
-    public function followedBy(Model $follower)
+    public function followedBy(Authenticatable $follower)
     {
         return $this->follows()->where(['follower_id' => $follower->getKey(), 'follower_type' => get_class($follower)])->exists();
     }

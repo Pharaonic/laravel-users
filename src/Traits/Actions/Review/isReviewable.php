@@ -2,7 +2,7 @@
 
 namespace Pharaonic\Laravel\Users\Traits\Actions\Review;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Pharaonic\Laravel\Users\Models\Actions\Review;
 
 trait isReviewable
@@ -10,10 +10,10 @@ trait isReviewable
     /**
      * Get Review Object
      *
-     * @param Model $reviewer
+     * @param Authenticatable $reviewer
      * @return Vote|null
      */
-    public function getReview(Model $reviewer)
+    public function getReview(Authenticatable $reviewer)
     {
         return $this->reviews()->where(['reviewer_id' => $reviewer->getKey(), 'reviewer_type' => get_class($reviewer)])->first();
     }
@@ -21,12 +21,12 @@ trait isReviewable
     /**
      * Review Model By reviewer
      *
-     * @param Model $reviewer
+     * @param Authenticatable $reviewer
      * @param float $rate
      * @param string|null $comment
      * @return boolean
      */
-    public function reviewBy(Model $reviewer, float $rate = 0, string $comment = null)
+    public function reviewBy(Authenticatable $reviewer, float $rate = 0, string $comment = null)
     {
         if ($review = $this->getReview($reviewer)) {
             return $review->update([
@@ -45,10 +45,10 @@ trait isReviewable
     /**
      * UnReview Model By reviewer
      *
-     * @param Model $reviewer
+     * @param Authenticatable $reviewer
      * @return boolean
      */
-    public function unReviewBy(Model $reviewer)
+    public function unReviewBy(Authenticatable $reviewer)
     {
         if ($review = $this->getReview($reviewer))
             return $review->delete();
@@ -59,10 +59,10 @@ trait isReviewable
     /**
      * Has Reviewed By reviewer
      *
-     * @param Model $reviewer
+     * @param Authenticatable $reviewer
      * @return boolean
      */
-    public function reviewedBy(Model $reviewer)
+    public function reviewedBy(Authenticatable $reviewer)
     {
         return $this->reviews()->where(['reviewer_id' => $reviewer->getKey(), 'reviewer_type' => get_class($reviewer)])->exists();
     }

@@ -2,7 +2,7 @@
 
 namespace Pharaonic\Laravel\Users\Traits\Actions\Favourite;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Pharaonic\Laravel\Users\Models\Actions\Favourite;
 
 trait isFavourable
@@ -10,10 +10,10 @@ trait isFavourable
     /**
      * Favourite with a Model
      *
-     * @param Model $favorer
+     * @param Authenticatable $favorer
      * @return boolean
      */
-    public function favouriteBy(Model $favorer)
+    public function favouriteBy(Authenticatable $favorer)
     {
         if ($this->favouredBy($favorer))
             return true;
@@ -24,10 +24,10 @@ trait isFavourable
     /**
      * Unfavourite with a Model
      *
-     * @param Model $favorer
+     * @param Authenticatable $favorer
      * @return boolean
      */
-    public function unFavouriteBy(Model $favorer)
+    public function unFavouriteBy(Authenticatable $favorer)
     {
         if ($favourite = $this->favourites()->where(['favorer_id' => $favorer->getKey(), 'favorer_type' => get_class($favorer)])->first())
             return $favourite->delete();
@@ -38,10 +38,10 @@ trait isFavourable
     /**
      * Has Favoured By favour
      *
-     * @param Model $favorer
+     * @param Authenticatable $favorer
      * @return boolean
      */
-    public function favouredBy(Model $favorer)
+    public function favouredBy(Authenticatable $favorer)
     {
         return $this->favourites()->where(['favorer_id' => $favorer->getKey(), 'favorer_type' => get_class($favorer)])->exists();
     }
