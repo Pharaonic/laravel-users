@@ -8,6 +8,18 @@ use Pharaonic\Laravel\Users\Models\Actions\Bookmark;
 trait isBookmarkable
 {
     /**
+     * Bootstrap the trait.
+     *
+     * @return void
+     */
+    public static function bootIsBookmarkable()
+    {
+        static::deleting(function ($model) {
+            $model->bookmarks()->delete();
+        });
+    }
+    
+    /**
      * Get Bookmark Object
      *
      * @param Authenticatable $bookmarker

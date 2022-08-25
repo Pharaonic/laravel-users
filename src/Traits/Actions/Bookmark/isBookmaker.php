@@ -8,6 +8,18 @@ use Pharaonic\Laravel\Users\Models\Actions\Bookmark;
 trait isBookmaker
 {
     /**
+     * Bootstrap the trait.
+     *
+     * @return void
+     */
+    public static function bootIsBookmaker()
+    {
+        static::deleting(function ($model) {
+            $model->bookmarks()->delete();
+        });
+    }
+
+    /**
      * Get Bookmark Object
      *
      * @param Model $bookmarkable
