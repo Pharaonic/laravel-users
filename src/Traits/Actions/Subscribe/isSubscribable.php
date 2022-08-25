@@ -8,6 +8,18 @@ use Pharaonic\Laravel\Users\Models\Actions\Subscribe;
 trait isSubscribable
 {
     /**
+     * Bootstrap the trait.
+     *
+     * @return void
+     */
+    public static function bootIsSubscribable()
+    {
+        static::deleting(function ($model) {
+            $model->subscriptions()->delete();
+        });
+    }
+
+    /**
      * Subscribe with a Model
      *
      * @param Authenticatable $subscriber
