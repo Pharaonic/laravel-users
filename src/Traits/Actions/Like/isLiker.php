@@ -8,6 +8,18 @@ use Pharaonic\Laravel\Users\Models\Actions\Like;
 trait isLiker
 {
     /**
+     * Bootstrap the trait.
+     *
+     * @return void
+     */
+    public static function bootIsLiker()
+    {
+        static::deleting(function ($model) {
+            $model->likes()->delete();
+        });
+    }
+
+    /**
      * Like Model
      *
      * @param Model $likeable
