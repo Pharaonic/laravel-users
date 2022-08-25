@@ -8,6 +8,18 @@ use Pharaonic\Laravel\Users\Models\Actions\Follow;
 trait isFollowable
 {
     /**
+     * Bootstrap the trait.
+     *
+     * @return void
+     */
+    public static function bootIsFollowable()
+    {
+        static::deleting(function ($model) {
+            $model->follows()->delete();
+        });
+    }
+
+    /**
      * Follow with a Model
      *
      * @param Authenticatable follower
