@@ -8,6 +8,18 @@ use Pharaonic\Laravel\Users\Models\Actions\Favourite;
 trait isFavorer
 {
     /**
+     * Bootstrap the trait.
+     *
+     * @return void
+     */
+    public static function bootIsFavorer()
+    {
+        static::deleting(function ($model) {
+            $model->favourites()->delete();
+        });
+    }
+
+    /**
      * Favourite Model
      *
      * @param Model $favourable
