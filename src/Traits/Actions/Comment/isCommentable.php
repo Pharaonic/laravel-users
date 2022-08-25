@@ -8,6 +8,18 @@ use Pharaonic\Laravel\Users\Models\Actions\Comment;
 trait isCommentable
 {
     /**
+     * Bootstrap the trait.
+     *
+     * @return void
+     */
+    public static function bootIsCommentable()
+    {
+        static::deleting(function ($model) {
+            $model->comments()->delete();
+        });
+    }
+
+    /**
      * Comment with a Model
      *
      * @param Authenticatable $commenter
