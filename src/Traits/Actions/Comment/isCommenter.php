@@ -15,7 +15,11 @@ trait isCommenter
     public static function bootIsCommenter()
     {
         static::deleting(function ($model) {
-            $model->comments()->delete();
+            if (in_array(SoftDeletes::class, class_uses($model))) {
+                $model->comments()->delete();
+            } else {
+                $model->comments()->forceDelete();
+            }
         });
     }
 
