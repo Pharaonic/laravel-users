@@ -8,6 +8,18 @@ use Pharaonic\Laravel\Users\Models\Actions\Review;
 trait isReviewer
 {
     /**
+     * Bootstrap the trait.
+     *
+     * @return void
+     */
+    public static function bootIsReviewer()
+    {
+        static::deleting(function ($model) {
+            $model->reviews()->delete();
+        });
+    }
+
+    /**
      * Get Review Object
      *
      * @param Model $reviewable
