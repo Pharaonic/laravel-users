@@ -5,10 +5,11 @@ namespace Pharaonic\Laravel\Users\Models\Actions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Pharaonic\Laravel\Users\Traits\Actions\Comment\isCommentable;
+use Pharaonic\Laravel\Users\Traits\Actions\Like\isLikeable;
 
 class Comment extends Model
 {
-    use isCommentable, SoftDeletes;
+    use isCommentable, isLikeable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
