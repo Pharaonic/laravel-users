@@ -8,6 +8,18 @@ use Pharaonic\Laravel\Users\Models\Actions\Vote;
 trait isVotable
 {
     /**
+     * Bootstrap the trait.
+     *
+     * @return void
+     */
+    public static function bootIsVotable()
+    {
+        static::deleting(function ($model) {
+            $model->votes()->delete();
+        });
+    }
+
+    /**
      * Get Vote Object
      *
      * @param Authenticatable $voter
