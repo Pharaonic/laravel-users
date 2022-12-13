@@ -19,11 +19,12 @@ trait HasHashedPassword
     public static function bootHasHashedPassword()
     {
         self::creating(function ($model) {
-            $model->password = Hash::make($model->password);
+            if (!empty($model->password))
+                $model->password = Hash::make($model->password);
         });
 
         self::updating(function ($model) {
-            if ($model->isDirty('password')) {
+            if ($model->isDirty('password') && !empty($model->password)) {
                 $model->password = Hash::make($model->password);
             }
         });
